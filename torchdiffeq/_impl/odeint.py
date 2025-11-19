@@ -12,7 +12,6 @@ from .fixed_grid_implicit import SDIRK2, TRBDF2
 from .fixed_adams import AdamsBashforth, AdamsBashforthMoulton
 from .dopri8 import Dopri8Solver
 from .tsit5 import Tsit5Solver
-from .scipy_wrapper import ScipyWrapperODESolver
 from .misc import _check_inputs, _flat_to_shape
 from .interp import _interp_evaluate
 
@@ -41,8 +40,6 @@ SOLVERS = {
     'trbdf2': TRBDF2,
     # Backward compatibility: use the same name as before
     'fixed_adams': AdamsBashforthMoulton,
-    # ~Backwards compatibility
-    'scipy_solver': ScipyWrapperODESolver,
 }
 
 

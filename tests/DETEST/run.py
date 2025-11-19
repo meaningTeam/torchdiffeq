@@ -1,6 +1,5 @@
 import time
 import numpy as np
-from scipy.stats.mstats import gmean
 import torch
 from torchdiffeq import odeint
 import detest

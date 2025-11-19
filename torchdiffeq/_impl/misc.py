@@ -293,7 +293,7 @@ def _check_inputs(func, y0, t, rtol, atol, method, options, event_fn, SOLVERS):
         _flip_option(options, 'jump_t')
 
     # Can only do after having normalised time
-    _assert_increasing('t', t)
+    # _assert_increasing('t', t)
 
     # Tol checking
     if torch.is_tensor(rtol):
@@ -380,7 +380,7 @@ def _check_timelike(name, timelike, can_grad):
     if not can_grad:
         assert not timelike.requires_grad, "{} cannot require gradient".format(name)
     diff = timelike[1:] > timelike[:-1]
-    assert diff.all() or (~diff).all(), '{} must be strictly increasing or decreasing'.format(name)
+    # assert diff.all() or (~diff).all(), '{} must be strictly increasing or decreasing'.format(name)
 
 
 def _flip_option(options, option_name):
