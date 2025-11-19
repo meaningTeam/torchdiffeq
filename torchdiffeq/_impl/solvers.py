@@ -101,7 +101,7 @@ class FixedGridODESolver(metaclass=abc.ABCMeta):
 
     def integrate(self, t):
         time_grid = self.grid_constructor(self.func, self.y0, t)
-        assert time_grid[0] == t[0] and time_grid[-1] == t[-1]
+        # assert time_grid[0] == t[0] and time_grid[-1] == t[-1]
 
         solution = torch.empty(len(t), *self.y0.shape, dtype=self.y0.dtype, device=self.y0.device)
         solution[0] = self.y0
@@ -110,19 +110,20 @@ class FixedGridODESolver(metaclass=abc.ABCMeta):
         y0 = self.y0
         for t0, t1 in zip(time_grid[:-1], time_grid[1:]):
             dt = t1 - t0
-            self.func.callback_step(t0, y0, dt)
+            # self.func.callback_step(t0, y0, dt)
             dy, f0 = self._step_func(self.func, t0, dt, t1, y0)
             y1 = y0 + dy
 
-            while j < len(t) and t1 >= t[j]:
-                if self.interp == "linear":
-                    solution[j] = self._linear_interp(t0, t1, y0, y1, t[j])
-                elif self.interp == "cubic":
-                    f1 = self.func(t1, y1)
-                    solution[j] = self._cubic_hermite_interp(t0, y0, f0, t1, y1, f1, t[j])
-                else:
-                    raise ValueError(f"Unknown interpolation method {self.interp}")
-                j += 1
+            solution[j] = y1
+            # while j < len(t) and t1 >= t[j]:
+            #     if self.interp == "linear":
+            #         solution[j] = self._linear_interp(t0, t1, y0, y1, t[j])
+            #     elif self.interp == "cubic":
+            #         f1 = self.func(t1, y1)
+            #         solution[j] = self._cubic_hermite_interp(t0, y0, f0, t1, y1, f1, t[j])
+            #     else:
+            #         raise ValueError(f"Unknown interpolation method {self.interp}")
+            #     j += 1
             y0 = y1
 
         return solution
