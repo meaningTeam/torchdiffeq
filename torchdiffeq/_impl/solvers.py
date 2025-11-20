@@ -123,7 +123,7 @@ class FixedGridODESolver(metaclass=abc.ABCMeta):
             #         solution[j] = self._cubic_hermite_interp(t0, y0, f0, t1, y1, f1, t[j])
             #     else:
             #         raise ValueError(f"Unknown interpolation method {self.interp}")
-            #     j += 1
+            j += 1
             y0 = y1
 
         return solution
